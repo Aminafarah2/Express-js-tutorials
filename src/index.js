@@ -13,7 +13,11 @@ const grocerylist = [
 ];
 
 // GET route to fetch grocery list
-app.get('/groceries', (req, res) => {
+app.get('/groceries',(req, res, next) =>{
+    console.log ('Before Handling Request');
+    next();
+},
+ (req, res) => {
     res.send(grocerylist);
 });
 // POST route to add new items to the grocery list
