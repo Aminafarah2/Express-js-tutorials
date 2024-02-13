@@ -1,28 +1,16 @@
 const express = require('express');
+const groceriesRoute=require('./Routes/groceries');
 // import the entire express library 
 const app = express(); // create an instance of our application (server)
 const PORT =3001;
 
 app.use(express.json());
 app.use(express.urlencoded());
-app.listen(PORT, () => console.log(`Running Express Server on Port ${PORT}!`));
-const grocerylist = [
-    { item: "milk", quantity: 2 },
-    { item: "cereal", quantity: 1 },
-    { item: "pop-tarts", quantity: 5 }
-];
+app.use((req, res, next) => {
+    console.log(`${req.method}:${req.url}`);
+    next()
+    ;})
+// Route for handling groceries
+app.use('/api/v1/groceries', groceriesRoute);
 
-// GET route to fetch grocery list
-app.get('/groceries',(req, res, next) =>{
-    console.log ('Before Handling Request');
-    next();
-},
- (req, res) => {
-    res.send(grocerylist);
-});
-// POST route to add new items to the grocery list
-app.post('/groceries', (req, res) =>{
-    console.log(req.body);
-    grocerylist.push(req.body)
-    res.send(201);
-})
+app.listen(PORT, () => console.log(`Running Express Server on Port ${PORT}!`));
