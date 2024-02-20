@@ -13,7 +13,7 @@ router.get('/',(req, res) => {
     res.send(grocerylist);
 });
 router.get('/:item',(req, res) => {
-    res.cookie('visited',true,{
+    res.cookies('visited',true,{
         maxAge:60000,
     
 });
